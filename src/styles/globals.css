@@ -1,0 +1,133 @@
+/* Miller font family with all weights and styles */
+@font-face {
+  font-family: "Miller";
+  src: url("/fonts/mdr/Miller_Display_Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Miller";
+  src: url("/fonts/mdr/Miller_Display_Light_Italic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Miller";
+  src: url("/fonts/mdr/Miller_Display_Roman.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Miller";
+  src: url("/fonts/mdr/Miller_Display_Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Miller";
+  src: url("/fonts/mdr/Miller_Display_Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Miller";
+  src: url("/fonts/mdr/Miller_Display_Bold_Italic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Miller Text variants */
+@font-face {
+  font-family: "Miller Text";
+  src: url("/fonts/mdr/Miller_Text_Roman.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Miller Text";
+  src: url("/fonts/mdr/Miller_Text_Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Miller Text";
+  src: url("/fonts/mdr/Miller_Text_Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Miller Text";
+  src: url("/fonts/mdr/Miller_Text_Bold_Italic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Background styles */
+html {
+  background-color: #eeeeee80;
+  background-image: linear-gradient(
+    to bottom right,
+    #eeeeee80 35%,
+    #1877f250 200%
+  );
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.post-cont {
+  font-size: 18px;
+  line-height: 26px;
+  text-align: justify;
+  font-family: "Miller" !important;
+}
+
+.post-cont img {
+  width: 100%;
+  height: 400px;
+}
+
+/* Miller Display font utility classes */
+.font-light {
+  font-family: "Miller" !important;
+  font-weight: 300 !important;
+}
+.font-normal {
+  font-family: "Miller" !important;
+  font-weight: 400 !important;
+}
+.font-bold {
+  font-family: "Miller" !important;
+  font-weight: 700 !important;
+}
+
+/* Miller Text font utility classes */
+.font-text {
+  font-family: "Miller Text" !important;
+  font-weight: 400 !important;
+}
+.font-text-bold {
+  font-family: "Miller Text" !important;
+  font-weight: 700 !important;
+}
+
+/* General Miller utility classes */
+.font-miller {
+  font-family: "Miller" !important;
+}
+.font-miller-text {
+  font-family: "Miller Text" !important;
+}
+
+@media (max-width: 500px) {
+  .post-cont {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .post-cont img {
+    width: 100%;
+    height: 200px;
+  }
+}
