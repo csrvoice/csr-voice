@@ -58,7 +58,11 @@ export const TopContainer = ({ posts }) => {
                   href={`/post/${posts[0]?.categories[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
                 >
                   <Image
-                    src={posts[0]?.featured_image}
+                    src={
+                      posts[0]?.featured_image === null
+                        ? "/images/fallbackTwo.png"
+                        : posts[0]?.featured_image
+                    }
                     layout="fill"
                     objectFit="cover"
                     objectPosition="center"
@@ -162,7 +166,11 @@ export const TopContainer = ({ posts }) => {
                         href={`/post/${item?.categories[0]?.slug}/${item?.slug}/${item?.id}`}
                       >
                         <Image
-                          src={item?.featured_image}
+                          src={
+                            item?.featured_image === null
+                              ? "/images/fallbackTwo.png"
+                              : item?.featured_image
+                          }
                           layout="fill"
                           objectFit="cover"
                           objectPosition="center"

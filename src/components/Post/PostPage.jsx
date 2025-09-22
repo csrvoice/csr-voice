@@ -11,6 +11,7 @@ import useDateFormat from "@/hooks/useDateFormat";
 
 export const PostPage = ({ post }) => {
   const slug = `${INIT_URI}/post/${post?.categories[0]?.slug}/${post?.slug}/${post?.id}`;
+
   return (
     <>
       <Box
@@ -101,7 +102,11 @@ export const PostPage = ({ post }) => {
                     }}
                   >
                     <Image
-                      src={post?.featured_image}
+                      src={
+                        post?.featured_image === null
+                          ? "/images/fallbackTwo.png"
+                          : post?.featured_image
+                      }
                       layout="fill"
                       objectFit="cover"
                       objectPosition="center"
@@ -145,7 +150,9 @@ export const PostPage = ({ post }) => {
                 }}
               >
                 <MoreStories />
-                <AdvertSquare />
+                <AdvertSquare img={"/images/ads/3.png"} />
+                <AdvertSquare img={"/images/ads/2.png"} />
+                <AdvertSquare img={"/images/ads/1.png"} />
               </Grid>
             </Grid>
           </Box>

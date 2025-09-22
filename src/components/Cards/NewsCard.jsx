@@ -39,7 +39,11 @@ export const NewsCard = ({ news }) => {
               }}
             >
               <Image
-                src={news?.featured_image}
+                src={
+                  news?.featured_image === null
+                    ? "/images/fallbackTwo.png"
+                    : news?.featured_image
+                }
                 layout="fill"
                 objectFit="cover"
                 objectPosition="center"

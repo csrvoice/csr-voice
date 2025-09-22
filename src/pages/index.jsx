@@ -135,15 +135,15 @@ export default function Home({ posts, rssItems }) {
       </Head>
       <Layout marqueeData={rssItems}>
         <TopContainer posts={posts?.data} />
-        <AdvertRect />
+        <AdvertRect img={"/images/ads/4.png"} />
         <Sectors />
-        <AdvertRect />
+        <AdvertRect img={"/images/ads/5.png"} />
         <ThirdContainer />
-        <AdvertRect />
+        <AdvertRect img={"/images/ads/adTwo.png"} />
         <Interviews />
-        <AdvertRect />
+        <AdvertRect img={"/images/ads/4.png"} />
         <Laws />
-        <AdvertRect />
+        <AdvertRect img={"/images/ads/5.png"} />
         {/* <VideoCont /> */}
       </Layout>
     </>

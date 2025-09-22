@@ -61,10 +61,15 @@ export const MoreStories = () => {
                         height: "70px",
                         width: "100px",
                         borderRadius: "5px",
+                        border: "1px solid #d3d3d3",
                       }}
                     >
                       <Image
-                        src={item?.featured_image}
+                        src={
+                          item?.featured_image === null
+                            ? "/images/fallbackTwo.png"
+                            : item?.featured_image
+                        }
                         layout="fill"
                         objectFit="cover"
                         objectPosition="center"

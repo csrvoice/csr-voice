@@ -42,11 +42,22 @@ const Index = ({ post, rssItems, categroy }) => {
         <meta
           name="image"
           property="og:image"
-          content={post?.data?.featured_image}
+          content={
+            post?.data?.featured_image === null
+              ? "/images/fallbackTwo.png"
+              : post?.data?.featured_image
+          }
         />
 
         <meta name="title" content={title} />
-        <meta name="twitter:image" content={post?.data?.featured_image} />
+        <meta
+          name="twitter:image"
+          content={
+            post?.data?.featured_image === null
+              ? "/images/fallbackTwo.png"
+              : post?.data?.featured_image
+          }
+        />
 
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="675" />
