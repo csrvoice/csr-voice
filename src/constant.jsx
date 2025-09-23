@@ -1,5 +1,5 @@
 export const INIT_URI = "https://www.csrvoice.com/";
-export const API_URL = "https://dashboard.csrvoice.com";
+export const API_URL = "https://dev.csrvoice.com";
 
 export const CATMENU = [
   { name: "Home", link: "/" },
