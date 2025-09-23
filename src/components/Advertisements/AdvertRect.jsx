@@ -21,7 +21,13 @@ export const AdvertRect = ({ img }) => {
           Advertisement
         </Typography>
         {/* <a href="https://shop.snowchildstudio.com/"> */}
-        <Image src={img} height={100} width={900} layout="intrinsic" />
+        <Image
+          src={img}
+          height={100}
+          width={900}
+          layout="intrinsic"
+          unoptimized
+        />
         {/* </a> */}
       </Box>
     </>

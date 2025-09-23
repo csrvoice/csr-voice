@@ -63,6 +63,7 @@ export const Interviews = () => {
                     }}
                   >
                     <Image
+                      unoptimized
                       src={posts[0]?.featured_image}
                       layout="fill"
                       objectFit="cover"

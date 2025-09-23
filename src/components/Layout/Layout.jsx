@@ -22,6 +22,7 @@ export const Layout = ({ children, marqueeData }) => {
         }}
       >
         <Image
+          unoptimized
           src="/images/earth.png"
           height={612}
           width={612}

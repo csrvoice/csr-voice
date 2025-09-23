@@ -67,6 +67,7 @@ export const Header = () => {
             <Box>
               <a href="/">
                 <Image
+                  unoptimized
                   src={"/images/csr.png"}
                   layout="intrinsic"
                   height={68}
@@ -277,6 +278,7 @@ export const Header = () => {
             <Box>
               <a href="/">
                 <Image
+                  unoptimized
                   src={"/images/csr.png"}
                   layout="intrinsic"
                   height={48}

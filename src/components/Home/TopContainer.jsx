@@ -58,6 +58,7 @@ export const TopContainer = ({ posts }) => {
                   href={`/post/${posts[0]?.categories[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
                 >
                   <Image
+                    unoptimized
                     src={
                       posts[0]?.featured_image === null
                         ? "/images/fallbackTwo.png"
@@ -166,6 +167,7 @@ export const TopContainer = ({ posts }) => {
                         href={`/post/${item?.categories[0]?.slug}/${item?.slug}/${item?.id}`}
                       >
                         <Image
+                          unoptimized
                           src={
                             item?.featured_image === null
                               ? "/images/fallbackTwo.png"

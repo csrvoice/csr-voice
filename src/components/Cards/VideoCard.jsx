@@ -63,6 +63,7 @@ export const VideoCard = ({ news }) => {
 
             {/* Background Image */}
             <Image
+              unoptimized
               src={
                 news?.featured_image === null
                   ? "/images/fallbackTwo.png"

@@ -190,3 +190,5 @@ export async function getServerSideProps() {
     };
   }
 }
+
+// Developed by 4d616e616e

@@ -65,6 +65,7 @@ export const MoreStories = () => {
                       }}
                     >
                       <Image
+                        unoptimized
                         src={
                           item?.featured_image === null
                             ? "/images/fallbackTwo.png"

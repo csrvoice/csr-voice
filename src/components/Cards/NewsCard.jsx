@@ -39,6 +39,7 @@ export const NewsCard = ({ news }) => {
               }}
             >
               <Image
+                unoptimized
                 src={
                   news?.featured_image === null
                     ? "/images/fallbackTwo.png"

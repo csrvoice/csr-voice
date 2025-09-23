@@ -20,6 +20,7 @@ export const Footer = () => {
             <Grid item size={{ xs: 12, md: 6 }}>
               <a href="/">
                 <Image
+                  unoptimized
                   src={"/images/csr.png"}
                   layout="intrinsic"
                   height={120}

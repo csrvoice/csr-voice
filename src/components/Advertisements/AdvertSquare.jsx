@@ -20,7 +20,13 @@ export const AdvertSquare = ({ img }) => {
           }}
         >
           {/* <a href="https://snowchildstudio.com/"> */}
-          <Image src={img} height={230} width={320} layout="intrinsic" />
+          <Image
+            src={img}
+            height={230}
+            width={320}
+            layout="intrinsic"
+            unoptimized
+          />
           {/* </a> */}
         </Box>
       </Box>

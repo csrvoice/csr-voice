@@ -102,6 +102,7 @@ export const PostPage = ({ post }) => {
                     }}
                   >
                     <Image
+                      unoptimized
                       src={
                         post?.featured_image === null
                           ? "/images/fallbackTwo.png"
