@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout/Layout";
 import { ArrowOutwardRounded } from "@mui/icons-material";
+import { INIT_URI } from "@/constant";
 import {
   Box,
   Button,
@@ -12,6 +13,7 @@ import {
   FormHelperText,
   CircularProgress,
 } from "@mui/material";
+import Head from "next/head";
 import React, { useState } from "react";
 
 const Advertise = () => {
@@ -211,6 +213,157 @@ const Advertise = () => {
 
   return (
     <>
+      <Head>
+        {/* Basic Meta Tags */}
+        <title>
+          Advertise with CSR Voice | Reach CSR & Sustainability Professionals in
+          India
+        </title>
+        <meta
+          name="description"
+          content="Partner with CSR Voice to reach India's leading Corporate Social Responsibility professionals, sustainability managers, and business leaders. Get advertising rates and media kit for premium CSR audience targeting."
+        />
+        <meta
+          name="keywords"
+          content="advertise CSR Voice, CSR advertising India, sustainability marketing, ESG advertising, corporate responsibility advertising, business ethics marketing, social impact advertising, CSR media kit, sustainability audience, responsible business advertising"
+        />
+        <meta name="author" content="CSR Voice" />
+        <meta name="robots" content="index, follow, max-snippet:-1" />
+        <meta name="googlebot" content="index, follow" />
+
+        {/* Viewport and Charset */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="Content-Language" content="en" />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href={`${INIT_URI}/advertise`} />
+
+        {/* Favicon and Icons */}
+        <link rel="icon" href="/images/logo.jpg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/logo.jpg" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="CSR Voice" />
+        <meta
+          property="og:title"
+          content="Advertise with CSR Voice | Reach CSR & Sustainability Professionals"
+        />
+        <meta
+          property="og:description"
+          content="Partner with CSR Voice to reach India's leading Corporate Social Responsibility professionals and sustainability managers. Premium CSR audience targeting available."
+        />
+        <meta property="og:url" content={`${INIT_URI}/advertise`} />
+        <meta property="og:image" content={`${INIT_URI}/images/logo.jpg`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Advertise with CSR Voice" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale:alternate" content="en_IN" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@csrvoice" />
+        <meta name="twitter:title" content="Advertise with CSR Voice" />
+        <meta
+          name="twitter:description"
+          content="Reach India's leading CSR professionals and sustainability managers. Get advertising rates and premium audience targeting options."
+        />
+        <meta name="twitter:image" content={`${INIT_URI}/images/logo.jpg`} />
+
+        {/* Additional Meta Tags */}
+        <meta name="theme-color" content="#2E7D32" />
+        <meta name="format-detection" content="telephone=no" />
+
+        {/* Service Schema for Advertising Services */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Service",
+              name: "CSR Voice Advertising Services",
+              description:
+                "Advertising solutions to reach Corporate Social Responsibility professionals and sustainability managers in India",
+              provider: {
+                "@type": "Organization",
+                name: "CSR Voice",
+                url: INIT_URI,
+                logo: {
+                  "@type": "ImageObject",
+                  url: `${INIT_URI}/images/logo.jpg`,
+                },
+              },
+              areaServed: "IN",
+              audience: {
+                "@type": "Audience",
+                audienceType:
+                  "CSR Professionals, Sustainability Managers, Corporate Executives, Policy Makers",
+              },
+              serviceType: [
+                "Digital Advertising",
+                "Sponsored Content",
+                "Newsletter Advertising",
+                "Event Sponsorship",
+                "Brand Partnership",
+              ],
+              url: `${INIT_URI}/advertise`,
+            }),
+          }}
+        />
+
+        {/* ContactPage Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ContactPage",
+              name: "Advertise with CSR Voice",
+              description:
+                "Contact CSR Voice for advertising opportunities and partnership inquiries",
+              url: `${INIT_URI}/advertise`,
+              mainEntity: {
+                "@type": "Organization",
+                name: "CSR Voice",
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  contactType: "advertising sales",
+                  email: "hello@csrvoice.com",
+                  availableLanguage: "English",
+                  areaServed: "IN",
+                },
+              },
+              breadcrumb: {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Home",
+                    item: INIT_URI,
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Advertise",
+                    item: `${INIT_URI}/advertise`,
+                  },
+                ],
+              },
+            }),
+          }}
+        />
+
+        {/* Additional business meta tags */}
+        <meta name="business-type" content="Media & Advertising" />
+        <meta
+          name="target-audience"
+          content="CSR Professionals, Sustainability Managers, Corporate Executives"
+        />
+        <meta name="advertising-contact" content="hello@csrvoice.com" />
+      </Head>
       <Layout>
         <Box sx={{ my: { xs: 2, md: 5 } }}>
           <Container maxWidth="xl">
