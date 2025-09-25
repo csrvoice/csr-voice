@@ -4,6 +4,10 @@ import { Typography } from "@mui/material";
 import React from "react";
 
 export const PostDeetsOne = ({ item, inImg }) => {
+  const filteredCategory = item?.categories?.filter(
+    (category) => category.name !== "Home Lead Story"
+  );
+
   return (
     <>
       <Typography
@@ -24,7 +28,7 @@ export const PostDeetsOne = ({ item, inImg }) => {
           fontSize="13px"
           className="font-bold"
         >
-          {useDecodeHtml(item?.categories[0]?.name)}
+          {useDecodeHtml(filteredCategory[0]?.name)}
         </Typography>
         {` • ${useReadingTime(item?.content)}`}
       </Typography>

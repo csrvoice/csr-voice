@@ -11,6 +11,9 @@ import useDateFormat from "@/hooks/useDateFormat";
 
 export const PostPage = ({ post }) => {
   const slug = `${INIT_URI}/post/${post?.categories[0]?.slug}/${post?.slug}/${post?.id}`;
+  const filteredCategory = post?.categories?.filter(
+    (category) => category.name !== "Home Lead Story"
+  );
 
   return (
     <>
@@ -79,7 +82,7 @@ export const PostPage = ({ post }) => {
                       fontSize="14px"
                       className="font-bold"
                     >
-                      {useDecodeHtml(post?.categories[0]?.name)}
+                      {useDecodeHtml(filteredCategory[0]?.name)}
                     </Typography>
                     {` • ${useReadingTime(post?.content)} • ${useDateFormat(
                       post?.modified

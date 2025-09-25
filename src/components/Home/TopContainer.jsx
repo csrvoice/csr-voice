@@ -1,15 +1,15 @@
 import React from "react";
-
 import { Box, Container, Grid, Typography } from "@mui/material";
-import Image from "next/image";
-import { useDecodeHtml } from "@/hooks/useDecodeHtml";
-import { useReadingTime } from "@/hooks/useReadingtime";
 import { TypographyOne } from "../Typographies/TypographyOne";
 import { TypographyTwo } from "../Typographies/TypographyTwo";
 import { SubheadingOne } from "../Typographies/SubheadingOne";
 import { PostDeetsOne } from "../Typographies/PostDeetsOne";
+import Image from "next/image";
 
 export const TopContainer = ({ posts }) => {
+  const filteredCategory = posts[0]?.categories?.filter(
+    (category) => category.name !== "Home Lead Story"
+  );
   return (
     <Box sx={{ my: { xs: 2, md: 5 } }}>
       <Container maxWidth="xl">
@@ -45,17 +45,13 @@ export const TopContainer = ({ posts }) => {
                   width: "100%",
                   borderRadius: "10px",
                   transition: "transform 0.4s ease, box-shadow 0.4s ease",
-                  // "&:hover": {
-                  //   transform: "translateY(-8px)",
-                  //   boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-                  // },
                   "&:hover img": {
                     transform: "scale(1.08)",
                   },
                 }}
               >
                 <a
-                  href={`/post/${posts[0]?.categories[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
+                  href={`/post/${filteredCategory[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
                 >
                   <Image
                     unoptimized
@@ -100,29 +96,8 @@ export const TopContainer = ({ posts }) => {
                   <TypographyOne posts={posts} />
                   {/* Subheading of the Post */}
                   <SubheadingOne posts={posts} />
-
-                  <Typography
-                    fontSize="12px"
-                    sx={{ color: "#FFFFFF", mt: 1, mb: 2 }}
-                    className="font-normal"
-                  >
-                    <Typography
-                      component={"a"}
-                      href={`/category/${posts[0]?.categories[0]?.slug}`}
-                      sx={{
-                        bgcolor: "#1877F2",
-                        color: "#ffffff",
-                        py: 0.2,
-                        px: 0.5,
-                        borderRadius: "4px",
-                      }}
-                      fontSize="12px"
-                      className="font-normal"
-                    >
-                      {posts[0]?.categories[0]?.name}
-                    </Typography>
-                    {` • ${useReadingTime(posts[0]?.content)}`}
-                  </Typography>
+                  {/* PoSt Detials */}
+                  <PostDeetsOne item={posts[0]} inImg={true} />
                 </Box>
               </Box>
             </Grid>
