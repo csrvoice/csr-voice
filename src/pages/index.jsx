@@ -294,15 +294,24 @@ export default function Home({ posts, rssItems }) {
 
       <Layout marqueeData={rssItems}>
         <TopContainer posts={posts?.data} />
-        <AdvertRect img={"/images/ads/4.png"} />
+        <AdvertRect
+          img={"/images/ads/4.png"}
+          link="https://www.airbus.com/en"
+        />
         <Sectors />
-        <AdvertRect img={"/images/ads/5.png"} />
+        <AdvertRect img={"/images/ads/5.png"} link="https://amzn.to/46RuYmy" />
         <ThirdContainer />
-        <AdvertRect img={"/images/ads/adTwo.png"} />
+        <AdvertRect
+          img={"/images/ads/adTwo.png"}
+          link="https://shop.snowchildstudio.com"
+        />
         <Interviews />
-        <AdvertRect img={"/images/ads/4.png"} />
+        <AdvertRect
+          img={"/images/ads/4.png"}
+          link="https://www.airbus.com/en"
+        />
         <Laws />
-        <AdvertRect img={"/images/ads/5.png"} />
+        <AdvertRect img={"/images/ads/5.png"} link="https://amzn.to/46RuYmy" />
         {/* <VideoCont /> */}
       </Layout>
     </>

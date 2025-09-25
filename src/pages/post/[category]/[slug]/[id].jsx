@@ -3,12 +3,17 @@ import { PostPage } from "@/components/Post/PostPage";
 import { RelatedNews } from "@/components/Post/RelatedNews";
 import { API_URL, INIT_URI } from "@/constant";
 import { useDecodeHtml } from "@/hooks/useDecodeHtml";
+import NotFound from "@/pages/404Page";
 import axios from "axios";
 import Head from "next/head";
 import React from "react";
 import { parseStringPromise } from "xml2js";
 
 const Index = ({ post, rssItems, categroy }) => {
+  if (!post) {
+    return <NotFound />;
+  }
+
   const title = useDecodeHtml(post?.data?.title);
   const excerpt = useDecodeHtml(post?.data?.excerpt);
   const category = post?.data?.categories?.[0];

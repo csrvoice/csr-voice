@@ -3,11 +3,14 @@ import { Typography } from "@mui/material";
 import React from "react";
 
 export const TypographyOne = ({ posts }) => {
+  const filteredCategory = posts[0]?.categories?.filter(
+    (category) => category.name !== "Home Lead Story"
+  );
   return (
     <>
       <Typography
         component="a"
-        href={`/post/${posts[0]?.categories[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
+        href={`/post/${filteredCategory[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
         fontSize={{ xs: "20px", md: "26px" }}
         lineHeight={{ xs: "28px", md: "32px" }}
         className="font-text-bold"
