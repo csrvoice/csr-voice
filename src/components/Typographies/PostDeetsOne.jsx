@@ -17,7 +17,7 @@ export const PostDeetsOne = ({ item, inImg }) => {
       >
         <Typography
           component={"a"}
-          href={`/category/${item?.categories[0]?.slug}`}
+          href={`/category/${filteredCategory[0]?.slug}`}
           sx={{
             bgcolor: inImg && "#1877F2",
             py: inImg && 0.2,
