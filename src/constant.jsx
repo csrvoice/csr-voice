@@ -5,7 +5,7 @@ export const CATMENU = [
   { name: "Home", link: "/" },
   { name: "News", link: "/category/news" },
   { name: "Governance", link: "/category/governance" },
-  { name: "Sustainable World", link: "/category/sustainable-word" },
+  { name: "Sustainable World", link: "/category/sustainable-world" },
   { name: "Laws", link: "/category/laws" },
   { name: "Sectors", link: "/category/sectors" },
 ];
@@ -25,7 +25,7 @@ export const MOBILECAT = [
   { name: "Home", link: "/" },
   { name: "News", link: "/category/news" },
   { name: "Governance", link: "/category/governance" },
-  { name: "Sustainable World", link: "/category/sustainable-word" },
+  { name: "Sustainable World", link: "/category/sustainable-world" },
   { name: "Laws", link: "/category/laws" },
 ];
 
