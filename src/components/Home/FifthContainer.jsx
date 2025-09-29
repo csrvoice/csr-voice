@@ -1,10 +1,8 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
-import { SocialStocks } from "./SocialStocks";
-import { Governance } from "./Governance";
 import { CategoryContainer } from "./CategoryContainer";
 
-export const ThirdContainer = () => {
+export const FifthContainer = () => {
   return (
     <>
       <Container maxWidth="xl">
@@ -19,7 +17,7 @@ export const ThirdContainer = () => {
                 border: "1.5px solid #e8e8e8",
               }}
             >
-              <CategoryContainer catSlug="social-stocks" />
+              <CategoryContainer catSlug="laws" />
             </Grid>
             <Grid
               item
@@ -30,7 +28,7 @@ export const ThirdContainer = () => {
                 border: "1.5px solid #e8e8e8",
               }}
             >
-              <CategoryContainer catSlug="governance" />
+              <CategoryContainer catSlug="sustainable-world" />
             </Grid>
           </Grid>
         </Box>

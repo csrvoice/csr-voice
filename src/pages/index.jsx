@@ -1,4 +1,5 @@
 import { AdvertRect } from "@/components/Advertisements/AdvertRect";
+import { FifthContainer } from "@/components/Home/FifthContainer";
 import { Interviews } from "@/components/Home/Interview";
 import { Laws } from "@/components/Home/Laws";
 import { Sectors } from "@/components/Home/Sectors";
@@ -310,7 +311,8 @@ export default function Home({ posts, rssItems }) {
           img={"/images/ads/4.png"}
           link="https://www.airbus.com/en"
         />
-        <Laws />
+        <FifthContainer />
+        {/* <Laws /> */}
         <AdvertRect img={"/images/ads/5.png"} link="https://amzn.to/46RuYmy" />
         {/* <VideoCont /> */}
       </Layout>

@@ -9,7 +9,8 @@ export const HeadingTypography = ({ title, slug }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          my: 1,
+          mb: 1,
+          mt: 1.5,
           px: 1.5,
         }}
       >
@@ -25,7 +26,7 @@ export const HeadingTypography = ({ title, slug }) => {
             component="a"
             href={`/category/${slug}`}
             fontSize={{ xs: "16px", md: "18px" }}
-            className="font-normal"
+            className="font-text-bold"
             sx={{
               color: "#1877F2",
               "&:hover": {
