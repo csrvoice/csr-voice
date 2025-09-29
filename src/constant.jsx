@@ -8,6 +8,7 @@ export const CATMENU = [
   { name: "Sustainable World", link: "/category/sustainable-world" },
   { name: "Laws", link: "/category/laws" },
   { name: "Sectors", link: "/category/sectors" },
+  // { name: "Videos", link: "/videos" },
 ];
 
 export const SECTORS = [

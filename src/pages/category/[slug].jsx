@@ -6,14 +6,21 @@ import { Button, CircularProgress, Container } from "@mui/material";
 import { Box, Grid } from "@mui/system";
 import axios from "axios";
 import Head from "next/head";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { parseStringPromise } from "xml2js";
 
 const Category = ({ posts, rssItems, category }) => {
-  const [paginatedPosts, setPaginatesPosts] = useState();
-  const [size, setSize] = useState(16);
+  // State for accumulated posts with Map for O(1) duplicate checking
+  const [allPosts, setAllPosts] = useState(posts?.data || []);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(posts?.pagination?.has_next || false);
+
+  // Use ref to track post IDs for efficient duplicate checking
+  const postIdsRef = useRef(new Set(posts?.data?.map((p) => p.id) || []));
+
+  // Ref to prevent multiple simultaneous requests
+  const isFetchingRef = useRef(false);
 
   const categoryName = posts?.category?.name || category;
   const categorySlug = posts?.category?.slug || category;
@@ -107,49 +114,101 @@ const Category = ({ posts, rssItems, category }) => {
 
   // Reset state when category changes
   useEffect(() => {
-    setPaginatesPosts(undefined);
-    setSize(16);
-    setHasMore(true);
-  }, [category]);
+    const initialPosts = posts?.data || [];
+    setAllPosts(initialPosts);
+    setCurrentPage(1);
+    setHasMore(posts?.pagination?.has_next || false);
+    postIdsRef.current = new Set(initialPosts.map((p) => p.id));
+    isFetchingRef.current = false;
+  }, [category, posts]);
 
-  const getPaginatedPosts = async () => {
+  // Function to fetch next page with robust duplicate handling
+  const fetchNextPage = useCallback(async () => {
+    // Prevent multiple simultaneous requests
+    if (isFetchingRef.current || loading || !hasMore) {
+      return;
+    }
+
+    isFetchingRef.current = true;
     setLoading(true);
+
     try {
-      const response = await axios.get(
-        `${API_URL}/wp-json/custom/v1/posts/category/${category}/format/standard?page=1&per_page=${size}`
+      const nextPage = currentPage + 1;
+
+      console.log(
+        `[Pagination] Fetching page ${nextPage} for category ${category}`
       );
-      setPaginatesPosts(response?.data?.data);
-      if (!response?.data?.pagination?.has_next) {
+
+      const response = await axios.get(
+        `${API_URL}/wp-json/custom/v1/posts/category/${category}/format/standard?page=${nextPage}&per_page=16`
+      );
+
+      const newPosts = response?.data?.data || [];
+      const pagination = response?.data?.pagination;
+
+      console.log(
+        `[Pagination] Received ${newPosts.length} posts, has_next: ${pagination?.has_next}`
+      );
+
+      if (newPosts.length === 0) {
         setHasMore(false);
+        return;
       }
+
+      // Filter out duplicates using the ref Set for O(1) lookup
+      const uniqueNewPosts = newPosts.filter((post) => {
+        if (!post.id || postIdsRef.current.has(post.id)) {
+          console.log(`[Pagination] Skipping duplicate post ID: ${post.id}`);
+          return false;
+        }
+        return true;
+      });
+
+      console.log(
+        `[Pagination] Adding ${uniqueNewPosts.length} unique posts out of ${newPosts.length} received`
+      );
+
+      if (uniqueNewPosts.length > 0) {
+        // Update the Set with new IDs
+        uniqueNewPosts.forEach((post) => postIdsRef.current.add(post.id));
+
+        // Append unique posts to state
+        setAllPosts((prevPosts) => [...prevPosts, ...uniqueNewPosts]);
+      }
+
+      // Update pagination state
+      setCurrentPage(nextPage);
+      setHasMore(pagination?.has_next || false);
     } catch (err) {
-      console.log(err);
+      console.error("[Pagination] Error fetching posts:", err);
+      // Don't set hasMore to false on error, allow retry
     } finally {
       setLoading(false);
+      isFetchingRef.current = false;
     }
-  };
+  }, [loading, hasMore, currentPage, category]);
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >
-        document.documentElement.offsetHeight - 1200 &&
-      !loading &&
-      hasMore
-    ) {
-      setSize((prevSize) => prevSize + 8);
+  // Optimized scroll handler with debouncing via ref
+  const handleScroll = useCallback(() => {
+    if (isFetchingRef.current || loading || !hasMore) {
+      return;
     }
-  };
 
-  useEffect(() => {
-    if (size > 16) {
-      getPaginatedPosts();
+    const scrollThreshold = 1200;
+    const scrollPosition =
+      window.innerHeight + document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.offsetHeight;
+
+    if (scrollPosition > scrollHeight - scrollThreshold) {
+      fetchNextPage();
     }
-  }, [size]);
+  }, [loading, hasMore, fetchNextPage]);
 
+  // Attach scroll listener
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMore]);
+  }, [handleScroll]);
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -392,20 +451,32 @@ const Category = ({ posts, rssItems, category }) => {
               }}
             >
               {/* Category Heading */}
-              <HeadingTypographyTwo title={posts?.category?.name} />
+              <HeadingTypographyTwo title={categoryName} />
               <Grid container rowGap={{ xs: 1, md: 5 }}>
-                {posts?.data?.map((item, key) => (
-                  <Grid item size={{ xs: 12, md: 3 }} key={key}>
-                    <NewsCard news={item} />
-                  </Grid>
-                ))}
-                {paginatedPosts?.slice(8)?.map((item, key) => (
-                  <Grid item size={{ xs: 12, md: 3 }} key={key}>
+                {allPosts?.map((item, key) => (
+                  <Grid item size={{ xs: 12, md: 3 }} key={item.id || key}>
                     <NewsCard news={item} />
                   </Grid>
                 ))}
               </Grid>
-              {!hasMore ? (
+
+              {/* Loading indicator */}
+              {loading && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "20vh",
+                  }}
+                >
+                  <CircularProgress sx={{ color: "#1877f2" }} />
+                </Box>
+              )}
+
+              {/* Back to top button when all posts loaded */}
+              {!hasMore && !loading && allPosts.length > 0 && (
                 <Box
                   sx={{
                     display: "flex",
@@ -436,17 +507,20 @@ const Category = ({ posts, rssItems, category }) => {
                     Back to top
                   </Button>
                 </Box>
-              ) : (
+              )}
+
+              {/* Empty state */}
+              {allPosts.length === 0 && !loading && (
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: "60vh",
+                    height: "20vh",
                   }}
                 >
-                  <CircularProgress sx={{ color: "#1877f2" }} />
+                  <p>No posts found in this category.</p>
                 </Box>
               )}
             </Box>
@@ -462,7 +536,7 @@ export default Category;
 export async function getServerSideProps({ query }) {
   try {
     const response = await axios.get(
-      `${API_URL}/wp-json/custom/v1/posts/category/${query?.slug}/format/standard?page=1&per_page=8`
+      `${API_URL}/wp-json/custom/v1/posts/category/${query?.slug}/format/standard?page=1&per_page=16`
     );
 
     const rssResponse = await axios.get(
@@ -488,10 +562,10 @@ export async function getServerSideProps({ query }) {
 
     return {
       props: {
-        posts: [],
+        posts: { data: [], pagination: { has_next: false } },
         rssItems: [],
         error: "Failed to fetch data",
-        category: "",
+        category: query?.slug || "",
       },
     };
   }

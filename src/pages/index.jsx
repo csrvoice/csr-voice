@@ -1,7 +1,6 @@
 import { AdvertRect } from "@/components/Advertisements/AdvertRect";
 import { FifthContainer } from "@/components/Home/FifthContainer";
 import { Interviews } from "@/components/Home/Interview";
-import { Laws } from "@/components/Home/Laws";
 import { Sectors } from "@/components/Home/Sectors";
 import { ThirdContainer } from "@/components/Home/ThirdContainer";
 import { TopContainer } from "@/components/Home/TopContainer";
@@ -312,7 +311,6 @@ export default function Home({ posts, rssItems }) {
           link="https://www.airbus.com/en"
         />
         <FifthContainer />
-        {/* <Laws /> */}
         <AdvertRect img={"/images/ads/5.png"} link="https://amzn.to/46RuYmy" />
         {/* <VideoCont /> */}
       </Layout>

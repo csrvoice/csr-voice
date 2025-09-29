@@ -1,3 +1,10 @@
+import { VideoCard } from "@/components/Cards/VideoCard";
+import { Layout } from "@/components/Layout/Layout";
+import { HeadingTypographyTwo } from "@/components/Typographies/HeadingTypographyTwo";
+import { API_URL } from "@/constant";
+import { useDecodeHtml } from "@/hooks/useDecodeHtml";
+import { useExtractSrc } from "@/hooks/useExtractSrc";
+import { Close } from "@mui/icons-material";
 import {
   Box,
   Container,
@@ -7,16 +14,10 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_URL } from "@/constant";
-import { VideoCard } from "../Cards/VideoCard";
-import { useExtractSrc } from "@/hooks/useExtractSrc";
-import { useDecodeHtml } from "@/hooks/useDecodeHtml";
-import { Close } from "@mui/icons-material";
-import { HeadingTypographyTwo } from "../Typographies/HeadingTypographyTwo";
+import React, { useEffect, useState } from "react";
 
-export const VideoCont = () => {
+const Index = () => {
   const isMobile = useMediaQuery("(max-width:500px)");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,7 +55,7 @@ export const VideoCont = () => {
       const page = 1;
       const format = "video";
       const videoRes = await axios.get(
-        `${API_URL}/wp-json/custom/v1/posts/format/${format}?page=${page}&per_page=2`
+        `${API_URL}/wp-json/custom/v1/posts/format/${format}?page=${page}&per_page=10`
       );
       setVideosData(videoRes?.data?.data);
     } catch (err) {
@@ -68,8 +69,12 @@ export const VideoCont = () => {
   }, []);
   return (
     <>
-      {!loading && (
-        <Box sx={{ mx: { xs: -1, md: 0 }, mt: { xs: 4, md: 0 } }}>
+      <Layout>
+        <Box
+          sx={{
+            my: { xs: 2, md: 5 },
+          }}
+        >
           <Container maxWidth="xl">
             <Box
               sx={{
@@ -93,7 +98,7 @@ export const VideoCont = () => {
                 {videosData?.map((item, key) => (
                   <Grid
                     item
-                    size={{ xs: 12 }}
+                    size={{ xs: 12, md: 3 }}
                     key={key}
                     onClick={() => handleOpen(item)}
                   >
@@ -104,7 +109,7 @@ export const VideoCont = () => {
             </Box>
           </Container>
         </Box>
-      )}
+      </Layout>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <Box
@@ -142,3 +147,5 @@ export const VideoCont = () => {
     </>
   );
 };
+
+export default Index;
