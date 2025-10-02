@@ -11,10 +11,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import Head from "next/head";
-import { parseStringPromise } from "xml2js";
 import { API_URL, INIT_URI } from "@/constant";
 
-const Search = ({ posts, rssItems, searchtext }) => {
+const Search = ({ posts, marqueeData, searchtext }) => {
   const [paginatedPosts, setPaginatesPosts] = useState();
   const [size, setSize] = useState(16);
   const [loading, setLoading] = useState(false);
@@ -326,7 +325,7 @@ const Search = ({ posts, rssItems, searchtext }) => {
         )}
       </Head>
 
-      <Layout marqueeData={rssItems}>
+      <Layout marqueeData={marqueeData}>
         <Box
           sx={{
             my: { xs: 2, md: 5 },
@@ -445,18 +444,15 @@ export async function getServerSideProps({ query }) {
     const postsResponse = await axios.get(
       `${API_URL}/wp-json/custom/v1/search?keyword=${searchText}&page=1&per_page=8`
     );
-    // ✅ RSS API
-    const rssResponse = await axios.get(
-      "https://timesofindia.indiatimes.com/rssfeedstopstories.cms"
+
+    const topMarquee = await axios.get(
+      `${API_URL}/wp-json/custom/v1/posts/format/standard?page=1&per_page=10`
     );
-    const parsedRSS = await parseStringPromise(rssResponse.data, {
-      explicitArray: false,
-    });
-    const rssItems = parsedRSS?.rss?.channel?.item?.slice(0, 5) || [];
+
     return {
       props: {
         posts: postsResponse.data,
-        rssItems,
+        marqueeData: topMarquee.data,
         searchtext: searchText,
         error: null,
       },
@@ -466,7 +462,7 @@ export async function getServerSideProps({ query }) {
     return {
       props: {
         posts: [],
-        rssItems: [],
+        marqueeData: [],
         searchtext: searchText,
         error: "Failed to fetch data",
       },

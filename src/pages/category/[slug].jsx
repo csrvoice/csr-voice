@@ -7,9 +7,8 @@ import { Box, Grid } from "@mui/system";
 import axios from "axios";
 import Head from "next/head";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { parseStringPromise } from "xml2js";
 
-const Category = ({ posts, rssItems, category }) => {
+const Category = ({ posts, marqueeData, category }) => {
   // State for accumulated posts with Map for O(1) duplicate checking
   const [allPosts, setAllPosts] = useState(posts?.data || []);
   const [currentPage, setCurrentPage] = useState(1);
@@ -435,7 +434,7 @@ const Category = ({ posts, rssItems, category }) => {
         <meta property="article:section" content={categoryName} />
       </Head>
 
-      <Layout marqueeData={rssItems}>
+      <Layout marqueeData={marqueeData}>
         <Box
           sx={{
             my: { xs: 2, md: 5 },
@@ -539,20 +538,13 @@ export async function getServerSideProps({ query }) {
       `${API_URL}/wp-json/custom/v1/posts/category/${query?.slug}/format/standard?page=1&per_page=16`
     );
 
-    const rssResponse = await axios.get(
-      "https://timesofindia.indiatimes.com/rssfeedstopstories.cms"
+    const topMarquee = await axios.get(
+      `${API_URL}/wp-json/custom/v1/posts/format/standard?page=1&per_page=10`
     );
-
-    const parsedRSS = await parseStringPromise(rssResponse.data, {
-      explicitArray: false,
-    });
-
-    const rssItems = parsedRSS?.rss?.channel?.item?.slice(0, 5) || [];
-
     return {
       props: {
         posts: response.data,
-        rssItems,
+        marqueeData: topMarquee.data,
         error: null,
         category: query?.slug,
       },
@@ -563,7 +555,7 @@ export async function getServerSideProps({ query }) {
     return {
       props: {
         posts: { data: [], pagination: { has_next: false } },
-        rssItems: [],
+        marqueeData: [],
         error: "Failed to fetch data",
         category: query?.slug || "",
       },

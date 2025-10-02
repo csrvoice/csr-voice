@@ -1,10 +1,11 @@
+import { EXCLUDEDCATEGORIES } from "@/constant";
 import { useDecodeHtml } from "@/hooks/useDecodeHtml";
 import { Typography } from "@mui/material";
 import React from "react";
 
 export const TypographyTwo = ({ item }) => {
   const filteredCategory = item?.categories?.filter(
-    (category) => category.name !== "Home Lead Story"
+    (category) => !EXCLUDEDCATEGORIES.includes(category.name)
   );
   return (
     <>

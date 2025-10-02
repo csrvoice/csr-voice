@@ -1,7 +1,5 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
-import { SocialStocks } from "./SocialStocks";
-import { Governance } from "./Governance";
 import { CategoryContainer } from "./CategoryContainer";
 
 export const ThirdContainer = () => {
@@ -19,7 +17,11 @@ export const ThirdContainer = () => {
                 border: "1.5px solid #e8e8e8",
               }}
             >
-              <CategoryContainer catSlug="social-stocks" />
+              <CategoryContainer
+                title="Social Stocks"
+                slug="social-stocks"
+                catSlug="home-social-stocks"
+              />
             </Grid>
             <Grid
               item
@@ -30,7 +32,11 @@ export const ThirdContainer = () => {
                 border: "1.5px solid #e8e8e8",
               }}
             >
-              <CategoryContainer catSlug="governance" />
+              <CategoryContainer
+                title="Governance"
+                slug="governance"
+                catSlug="home-governance"
+              />
             </Grid>
           </Grid>
         </Box>

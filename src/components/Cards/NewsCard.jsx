@@ -4,8 +4,12 @@ import React from "react";
 import { TypographyTwo } from "../Typographies/TypographyTwo";
 import { PostDeetsOne } from "../Typographies/PostDeetsOne";
 import { SubheadingTwo } from "../Typographies/SubheadingTwo";
+import { EXCLUDEDCATEGORIES } from "@/constant";
 
 export const NewsCard = ({ news }) => {
+  const filteredCategory = news?.categories?.filter(
+    (category) => !EXCLUDEDCATEGORIES.includes(category.name)
+  );
   return (
     <>
       <Card variant="outlined" sx={{ border: "none", height: "360px" }}>
@@ -19,7 +23,7 @@ export const NewsCard = ({ news }) => {
           }}
         >
           <a
-            href={`/post/${news?.categories[0]?.slug}/${news?.slug}/${news?.id}`}
+            href={`/post/${filteredCategory[0]?.slug}/${news?.slug}/${news?.id}`}
           >
             <Box
               sx={{

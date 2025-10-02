@@ -6,7 +6,7 @@ import { NewsCard } from "../Cards/NewsCard";
 import { API_URL } from "@/constant";
 import { HeadingTypography } from "../Typographies/HeadingTypography";
 
-export const CategoryContainer = ({ catSlug }) => {
+export const CategoryContainer = ({ title, slug, catSlug }) => {
   const [posts, setPosts] = useState();
   const [category, setCategory] = useState();
   const [loading, setLoading] = useState(true);
@@ -36,7 +36,7 @@ export const CategoryContainer = ({ catSlug }) => {
           <Container maxWidth="xl">
             <Box sx={{ borderRadius: "7px" }}>
               {/* Category Heading */}
-              <HeadingTypography title={category?.name} slug={category?.slug} />
+              <HeadingTypography title={title} slug={slug} />
 
               <Grid container gap={{ xs: 2, md: 0 }} sx={{ mt: 2 }}>
                 {posts?.map((item, key) => (

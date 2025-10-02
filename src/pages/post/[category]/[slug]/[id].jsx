@@ -7,9 +7,8 @@ import NotFound from "@/pages/404Page";
 import axios from "axios";
 import Head from "next/head";
 import React from "react";
-import { parseStringPromise } from "xml2js";
 
-const Index = ({ post, rssItems, categroy }) => {
+const Index = ({ post, marqueeData, categroy }) => {
   if (!post) {
     return <NotFound />;
   }
@@ -344,7 +343,7 @@ const Index = ({ post, rssItems, categroy }) => {
         <meta name="standout" content={postUrl} />
       </Head>
 
-      <Layout marqueeData={rssItems}>
+      <Layout marqueeData={marqueeData}>
         <PostPage post={post?.data} />
         <RelatedNews catName={categroy} />
       </Layout>
@@ -359,19 +358,14 @@ export async function getServerSideProps({ query }) {
       `${API_URL}/wp-json/custom/v1/posts/${query?.slug}`
     );
 
-    // Fetch RSS feed from TOI
-    const rssResponse = await axios.get(
-      "https://timesofindia.indiatimes.com/rssfeedstopstories.cms"
+    const topMarquee = await axios.get(
+      `${API_URL}/wp-json/custom/v1/posts/format/standard?page=1&per_page=10`
     );
-    const parsedRSS = await parseStringPromise(rssResponse.data, {
-      explicitArray: false,
-    });
-    const rssItems = parsedRSS?.rss?.channel?.item?.slice(0, 5) || [];
 
     return {
       props: {
         post: postsResponse.data,
-        rssItems,
+        marqueeData: topMarquee.data,
         error: null,
         categroy: query?.category,
       },
@@ -381,7 +375,7 @@ export async function getServerSideProps({ query }) {
     return {
       props: {
         posts: [],
-        rssItems: [],
+        marqueeData: [],
         error: "Failed to fetch data",
         categroy: "",
       },

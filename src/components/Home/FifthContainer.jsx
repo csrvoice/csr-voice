@@ -17,7 +17,7 @@ export const FifthContainer = () => {
                 border: "1.5px solid #e8e8e8",
               }}
             >
-              <CategoryContainer catSlug="laws" />
+              <CategoryContainer title="Laws" slug="laws" catSlug="home-laws" />
             </Grid>
             <Grid
               item
@@ -28,7 +28,11 @@ export const FifthContainer = () => {
                 border: "1.5px solid #e8e8e8",
               }}
             >
-              <CategoryContainer catSlug="sustainable-world" />
+              <CategoryContainer
+                title="Sustainable World"
+                slug="sustainable-world"
+                catSlug="home-sustainable-world"
+              />
             </Grid>
           </Grid>
         </Box>

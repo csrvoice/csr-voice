@@ -5,11 +5,15 @@ import { TypographyTwo } from "../Typographies/TypographyTwo";
 import { SubheadingOne } from "../Typographies/SubheadingOne";
 import { PostDeetsOne } from "../Typographies/PostDeetsOne";
 import Image from "next/image";
+import {
+  useFilteredCategories,
+  useFilteredStories,
+} from "@/hooks/useFilteredCategories";
 
-export const TopContainer = ({ posts }) => {
-  const filteredCategory = posts[0]?.categories?.filter(
-    (category) => category.name !== "Home Lead Story"
-  );
+export const TopContainer = ({ posts, homeLatestStories }) => {
+  const filteredCategory = useFilteredCategories(posts[0]?.categories);
+  const filteredCategoryTwo = useFilteredStories(homeLatestStories);
+
   return (
     <Box sx={{ my: { xs: 2, md: 5 } }}>
       <Container maxWidth="xl">
@@ -76,6 +80,7 @@ export const TopContainer = ({ posts }) => {
                     right: 0,
                     left: 0,
                     px: { xs: 2, md: 4 },
+                    pb: 2,
                     background:
                       "linear-gradient(to top, #000000 30%, transparent)",
                     backdropFilter: "blur(1.5px)",
@@ -111,7 +116,7 @@ export const TopContainer = ({ posts }) => {
                   gap: 1.5,
                 }}
               >
-                {posts?.slice(1, 7).map((item, key) => (
+                {homeLatestStories?.slice(0, 6).map((item, key) => (
                   <Box
                     key={key}
                     sx={{
@@ -139,7 +144,7 @@ export const TopContainer = ({ posts }) => {
                       }}
                     >
                       <a
-                        href={`/post/${item?.categories[0]?.slug}/${item?.slug}/${item?.id}`}
+                        href={`/post/${filteredCategoryTwo[key]?.slug}/${item?.slug}/${item?.id}`}
                       >
                         <Image
                           unoptimized

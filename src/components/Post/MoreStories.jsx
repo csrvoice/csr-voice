@@ -6,13 +6,15 @@ import { API_URL } from "@/constant";
 import { TypographyTwo } from "../Typographies/TypographyTwo";
 import { PostDeetsOne } from "../Typographies/PostDeetsOne";
 
-export const MoreStories = () => {
+export const MoreStories = ({ content20, content40 }) => {
   const [data, setData] = useState();
+
+  const size = content40 ? 10 : content20 ? 8 : 6;
 
   const getData = async () => {
     try {
       const postsResponse = await axios.get(
-        `${API_URL}/wp-json/custom/v1/posts/format/standard?page=1&per_page=10`
+        `${API_URL}/wp-json/custom/v1/posts/format/standard?page=1&per_page=${size}`
       );
       setData(postsResponse?.data?.data);
     } catch (err) {

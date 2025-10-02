@@ -1,3 +1,4 @@
+import { EXCLUDEDCATEGORIES } from "@/constant";
 import { useDecodeHtml } from "@/hooks/useDecodeHtml";
 import { useReadingTime } from "@/hooks/useReadingtime";
 import { Typography } from "@mui/material";
@@ -5,7 +6,7 @@ import React from "react";
 
 export const PostDeetsOne = ({ item, inImg }) => {
   const filteredCategory = item?.categories?.filter(
-    (category) => category.name !== "Home Lead Story"
+    (category) => !EXCLUDEDCATEGORIES.includes(category.name)
   );
 
   return (

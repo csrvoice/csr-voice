@@ -5,15 +5,19 @@ import { MoreStories } from "./MoreStories";
 import { useDecodeHtml } from "@/hooks/useDecodeHtml";
 import { useReadingTime } from "@/hooks/useReadingtime";
 import { Sharing } from "../Sharing/Sharing";
-import { INIT_URI } from "@/constant";
+import { EXCLUDEDCATEGORIES, INIT_URI } from "@/constant";
 import { AdvertSquare } from "../Advertisements/AdvertSquare";
 import useDateFormat from "@/hooks/useDateFormat";
 
 export const PostPage = ({ post }) => {
   const slug = `${INIT_URI}/post/${post?.categories[0]?.slug}/${post?.slug}/${post?.id}`;
   const filteredCategory = post?.categories?.filter(
-    (category) => category.name !== "Home Lead Story"
+    (category) => !EXCLUDEDCATEGORIES.includes(category.name)
   );
+
+  const contentLines = post?.content?.split("\n").length || 0;
+  const content20 = contentLines > 20;
+  const content40 = contentLines > 40;
 
   return (
     <>
@@ -91,31 +95,29 @@ export const PostPage = ({ post }) => {
                   <Sharing text={useDecodeHtml(post?.title)} slug={slug} />
                 </Box>
                 <Box sx={{ pr: { xs: 0, md: 2, lg: 5 } }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: "7px",
-                      border: "1px solid #eeeeee",
-                      position: "relative",
-                      height: { xs: "200px", sm: "400px", md: "490px" },
-                      width: "100%",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <Image
-                      unoptimized
-                      src={
-                        post?.featured_image === null
-                          ? "/images/fallbackTwo.png"
-                          : post?.featured_image
-                      }
-                      layout="fill"
-                      objectFit="cover"
-                      objectPosition="center"
-                    />
-                  </Box>
+                  {post?.featured_image !== null && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "7px",
+                        border: "1px solid #eeeeee",
+                        position: "relative",
+                        height: { xs: "200px", sm: "400px", md: "490px" },
+                        width: "100%",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Image
+                        unoptimized
+                        src={post?.featured_image}
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="center"
+                      />
+                    </Box>
+                  )}
                   <Box
                     sx={{
                       borderTop: "1.5px solid #e8e8e8",
@@ -153,10 +155,14 @@ export const PostPage = ({ post }) => {
                   borderTop: { xs: "1.5px solid #e8e8e8", md: "none" },
                 }}
               >
-                <MoreStories />
+                <MoreStories content20={content20} content40={content40} />
                 <AdvertSquare img={"/images/ads/3.png"} />
-                <AdvertSquare img={"/images/ads/2.png"} />
-                <AdvertSquare img={"/images/ads/1.png"} />
+                {content20 && (
+                  <>
+                    <AdvertSquare img={"/images/ads/2.png"} />
+                    {content40 && <AdvertSquare img={"/images/ads/1.png"} />}
+                  </>
+                )}
               </Grid>
             </Grid>
           </Box>

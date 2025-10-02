@@ -15,7 +15,7 @@ export const Sectors = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${API_URL}/wp-json/custom/v1/posts/category/sectors/format/standard?page=1&per_page=4`
+        `${API_URL}/wp-json/custom/v1/posts/category/home-sector/format/standard?page=1&per_page=4`
       );
       setCategory(response?.data?.category);
       setPosts(response?.data?.data || []);
@@ -45,7 +45,7 @@ export const Sectors = () => {
               }}
             >
               {/* Category Heading */}
-              <HeadingTypography title={category?.name} slug={category?.slug} />
+              <HeadingTypography title="Sector" slug="sectors" />
 
               <Grid container gap={{ xs: 2, md: 0 }} sx={{ mt: 2 }}>
                 {posts?.map((item, key) => (

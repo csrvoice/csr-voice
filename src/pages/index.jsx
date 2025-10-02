@@ -8,12 +8,12 @@ import { Layout } from "@/components/Layout/Layout";
 import { API_URL } from "@/constant";
 import axios from "axios";
 import Head from "next/head";
-import { parseStringPromise } from "xml2js";
 
-export default function Home({ posts, rssItems }) {
+export default function Home({ posts, homeLatestStories, marqueeData }) {
   const siteName = "CSR Voice";
   const siteUrl = "https://csrvoice.com";
   const logoUrl = "/images/logo.jpg";
+  console.log(posts);
 
   return (
     <>
@@ -292,8 +292,11 @@ export default function Home({ posts, rssItems }) {
         />
       </Head>
 
-      <Layout marqueeData={rssItems}>
-        <TopContainer posts={posts?.data} />
+      <Layout marqueeData={marqueeData}>
+        <TopContainer
+          posts={posts?.data}
+          homeLatestStories={homeLatestStories?.data}
+        />
         <AdvertRect
           img={"/images/ads/4.png"}
           link="https://www.airbus.com/en"
@@ -326,24 +329,23 @@ export async function getServerSideProps() {
 
     // Fetch custom posts from your CMS
     const postsResponse = await axios.get(
-      `${API_URL}/wp-json/custom/v1/posts/category/${category}/format/${format}?page=${page}&per_page=8`
+      `${API_URL}/wp-json/custom/v1/posts/category/${category}/format/${format}?page=${page}&per_page=1`
+    );
+
+    const latestStoriesResponse = await axios.get(
+      `${API_URL}/wp-json/custom/v1/posts/category/home-latest-stories/format/${format}?page=${page}&per_page=8`
     );
 
     // Fetch RSS feed from TOI
-    const rssResponse = await axios.get(
-      "https://timesofindia.indiatimes.com/rssfeedstopstories.cms"
+    const topMarquee = await axios.get(
+      `${API_URL}/wp-json/custom/v1/posts/format/standard?page=1&per_page=10`
     );
-
-    const parsedRSS = await parseStringPromise(rssResponse.data, {
-      explicitArray: false,
-    });
-
-    const rssItems = parsedRSS?.rss?.channel?.item?.slice(0, 5) || [];
 
     return {
       props: {
         posts: postsResponse.data,
-        rssItems,
+        homeLatestStories: latestStoriesResponse.data,
+        marqueeData: topMarquee.data,
         error: null,
       },
     };
@@ -353,11 +355,10 @@ export async function getServerSideProps() {
     return {
       props: {
         posts: [],
-        rssItems: [],
+        homeLatestStories: [],
+        topMarquee: [],
         error: "Failed to fetch data",
       },
     };
   }
 }
-
-// Developed by 4d616e616e

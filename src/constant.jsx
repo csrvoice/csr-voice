@@ -36,3 +36,14 @@ export const MOREMENU = [
   { name: "Advertise", link: "/advertise" },
   { name: "Terms & Conditions", link: "/tnc" },
 ];
+
+export const EXCLUDEDCATEGORIES = [
+  "Home Lead Story",
+  "Home Latest Stories",
+  "Home Governance",
+  "Home Interviews",
+  "Home Laws",
+  "Home Sector",
+  "Home Social Stocks",
+  "Home Sustainable World",
+];
