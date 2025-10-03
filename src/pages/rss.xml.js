@@ -1,4 +1,5 @@
 import { API_URL, INIT_URI } from "@/constant";
+import { useDecodeHtml } from "@/hooks/useDecodeHtml";
 import { useFilteredCategories } from "@/hooks/useFilteredCategories";
 import axios from "axios";
 import RSS from "rss";
@@ -7,11 +8,6 @@ export async function getServerSideProps({ res }) {
   // Fetch posts from your WordPress API
   const apiUrl = `${API_URL}/wp-json/custom/v1/posts/format/standard?page=1&per_page=20`;
   const response = await axios.get(apiUrl);
-
-  console.log(
-    response?.data?.data?.map((item) => item),
-    "MANAN TANDON >>>>>>>>>>>>>>>>>>>>>>>"
-  );
 
   // Create feed
   const feed = new RSS({
@@ -25,7 +21,7 @@ export async function getServerSideProps({ res }) {
   // Add posts to feed
   response?.data?.data?.map((post) => {
     feed?.item({
-      title: post?.title,
+      title: useDecodeHtml(post?.title),
       description: post?.excerpt,
       url: `${INIT_URI}${useFilteredCategories(post.categories)[0]?.slug}/${
         post.slug
