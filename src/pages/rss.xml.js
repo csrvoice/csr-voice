@@ -31,7 +31,7 @@ export async function getServerSideProps({ res }) {
   });
 
   // Send feed as XML
-  res.setHeader("Content-Type", "text/xml");
+  res.setHeader("Content-Type", "application/rss+xml; charset=UTF-8");
   res.write(feed.xml({ indent: true }));
   res.end();
 
