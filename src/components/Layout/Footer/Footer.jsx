@@ -1,5 +1,5 @@
-import { CATMENU, MOREMENU, SOCIALS } from "@/constant";
-import { Facebook, LinkedIn, X, YouTube } from "@mui/icons-material";
+import { CATMENU, INIT_URI, MOREMENU, SOCIALS } from "@/constant";
+import { Facebook, LinkedIn, RssFeed, X, YouTube } from "@mui/icons-material";
 import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
@@ -53,6 +53,11 @@ export const Footer = () => {
                 <a href="http://www.linkedin.com/in/csr-voice-049410232">
                   <IconButton sx={{ border: "0.9px solid #e8e8e8" }}>
                     <LinkedIn sx={{ color: "#0A66C2" }} />
+                  </IconButton>
+                </a>
+                <a href={`${INIT_URI}rss.xml`}>
+                  <IconButton sx={{ border: "0.9px solid #e8e8e8" }}>
+                    <RssFeed sx={{ color: "#666666" }} />
                   </IconButton>
                 </a>
               </Box>

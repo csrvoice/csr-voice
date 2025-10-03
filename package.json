@@ -19,6 +19,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-fast-marquee": "^1.6.5",
+    "rss": "^1.2.2",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {

@@ -1,11 +1,10 @@
 import { useDecodeHtml } from "@/hooks/useDecodeHtml";
+import { useFilteredCategories } from "@/hooks/useFilteredCategories";
 import { Typography } from "@mui/material";
 import React from "react";
 
 export const TypographyOne = ({ posts }) => {
-  const filteredCategory = posts[0]?.categories?.filter(
-    (category) => category.name !== "Home Lead Story"
-  );
+  const filteredCategory = useFilteredCategories(posts[0]?.categories);
   return (
     <>
       <Typography

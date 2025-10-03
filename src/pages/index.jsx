@@ -13,7 +13,6 @@ export default function Home({ posts, homeLatestStories, marqueeData }) {
   const siteName = "CSR Voice";
   const siteUrl = "https://csrvoice.com";
   const logoUrl = "/images/logo.jpg";
-  console.log(posts);
 
   return (
     <>

@@ -2,24 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import Image from "next/image";
-import { API_URL } from "@/constant";
+import { API_URL, EXCLUDEDCATEGORIES } from "@/constant";
 import { VideoCont } from "./VideoCont";
 import { HeadingTypography } from "../Typographies/HeadingTypography";
 import { TypographyOne } from "../Typographies/TypographyOne";
 import { SubheadingOne } from "../Typographies/SubheadingOne";
 import { PostDeetsOne } from "../Typographies/PostDeetsOne";
+import { useFilteredCategories } from "@/hooks/useFilteredCategories";
 
 export const Interviews = () => {
   const [posts, setPosts] = useState();
   const [loading, setLoading] = useState(true);
+  const [filteredCategory, setFilteredCategories] = useState();
 
   const fetchCategoryArticles = async () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${API_URL}/wp-json/custom/v1/posts/category/interview/format/standard?page=1&per_page=2`
+        `${API_URL}/wp-json/custom/v1/posts/category/home-interviews/format/standard?page=1&per_page=2`
       );
       setPosts(response?.data?.data || []);
+      setFilteredCategories(
+        useFilteredCategories(response?.data?.data[0]?.categories)
+      );
     } catch (error) {
       console.error("Error fetching category articles:", error);
     } finally {
@@ -30,8 +35,10 @@ export const Interviews = () => {
   useEffect(() => {
     fetchCategoryArticles();
   }, []);
+
   return (
     <>
+      {" "}
       {!loading && (
         <Box sx={{ my: 5 }}>
           <Container maxWidth="xl">
@@ -51,7 +58,7 @@ export const Interviews = () => {
             <Grid container>
               <Grid item size={{ xs: 12, md: 8 }}>
                 <a
-                  href={`/post/${posts[0]?.categories[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
+                  href={`/post/${filteredCategory[0]?.slug}/${posts[0]?.slug}/${posts[0]?.id}`}
                 >
                   <Box
                     sx={{
